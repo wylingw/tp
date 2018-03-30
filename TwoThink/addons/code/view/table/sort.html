@@ -1,0 +1,28 @@
+{volist name=":parse_field_attr($model_info['field_group'])" id="vo" empty="暂时没有数据,请先保存字段管理"}
+<div class="form-item cf edit_sort edit_sort_l form_field_sort">
+    <span>{$vo}</span>
+    <ul class="dragsort needdragsort" data-group="{$key}">
+        {foreach name="model_info['fields'][$key]" item="field" key="k"}
+        <li class="getSort">
+            <em data="{$field['id']}">{$field['title']} [{$field['name']}]</em>
+            <input type="hidden" name="field_sort[{$key}][]" value="{$field['name']}"/>
+        </li>
+        {/foreach}
+    </ul>
+</div>
+{/volist}
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery.dragsort-0.5.2.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    //拖曳插件初始化
+    $(function(){
+        $(".needdragsort").dragsort({
+            dragSelector:'li',
+            placeHolderTemplate: '<li class="draging-place">&nbsp;</li>',
+            dragBetween:true,	//允许拖动到任意地方
+            dragEnd:function(){
+                var self = $(this);
+                self.find('input').attr('name', 'field_sort[' + self.closest('ul').data('group') + '][]');
+            }
+        });
+    })
+</script>

@@ -1,0 +1,87 @@
+<!-- 成员授权编辑页面 -->
+{extend name="public/base" /}
+{block name="body"}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="tab-wrap">
+            <!-- 数据列表 -->
+            <div class="margin-top-10">
+                <form id="form" action="{:url('add')}" method="post" class="form-horizontal doc-modal-form layui-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label class="item-label"><span class="must">*</span>标题</label>
+                    <div class="controls">
+                        <input type="text" class="text form-control" name="title">
+                    </div>
+                </div>
+                    <div class="form-group">
+                        <label class="item-label"><span class="must">*</span>图片</label>
+                        <div class="controls">
+                            <div id="uploader-demo">
+                                <!--用来存放item-->
+                                <div id="fileList" class="uploader-list"></div>
+                                <div id="filePicker">选择图片</div>
+                            </div>
+                            <img id="logo_view" width="120px">
+                            <input type="hidden" id="image" name="image">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="item-label"><span class="must">*</span>内容</label>
+                        <div class="controls">
+                            <input type="text" class="text form-control" name="content">
+                        </div>
+                    </div>
+                <div class="btn-submit-group">
+                    <button class="btn btn-danger iframe" type="submit">确 定</button>
+                    <button class="btn btn-return btn-success" onclick="javascript:history.back(-1);return false;">返 回</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script type="text/javascript" charset="utf-8">
+    // 初始化Web Uploader
+    var uploader = WebUploader.create({
+
+        // 选完文件后，是否自动上传。
+        auto: true,
+
+        // swf文件路径
+        swf: '__PUBLIC__/webuploader-0.1.5/Uploader.swf',
+
+        // 文件接收服务端。
+        server: "{:url('admin/ad/upload')}",
+
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#filePicker',
+
+        // 只允许选择图片文件。
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+        }
+    });
+    // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+    uploader.on( 'uploadSuccess', function( file,response ) {
+        //$( '#'+file.id ).addClass('upload-state-done');
+        var imgUrl=response.url;
+        $('#image').val(imgUrl);
+        //图片回显
+        $('#logo_view').attr('src',imgUrl);
+        $('#logo_view').attr('width','120px');
+    });
+
+    $('select[name=group]').change(function(){
+        location.href = this.value;
+    });
+    //导航高亮
+    highlight_subnav('{:url('AuthManager/index')}');
+</script>
+{/block}

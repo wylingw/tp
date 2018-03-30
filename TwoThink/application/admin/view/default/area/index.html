@@ -1,0 +1,121 @@
+{extend name="public/base" /}
+{block name="content-header"}
+<h5><i class="fa fa-fw fa-connectdevelop"></i> 导航管理(系统菜单请勿随意拖动)</h5>
+{/block}
+{block name="body"}
+<div class="row">
+    <div class="col-xs-12">
+        <div>
+            <button type="button" class="btn btn-info ajax-get iframe" url="{:url('add')}">新增</button>
+            <button id="nestable-menu" type="button" data-action="collapse-all" class="btn bbg-teal">收起所有</button>
+        </div>
+        <!-- 数据列表 -->
+        <div class="margin-top-10">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th class="">ID</th>
+                    <th class="">标题</th>
+                    <th class="">内容</th>
+                    <th class="">发布时间</th>
+                    <th class="">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach($lists as $p):?>
+                <tr id="content" page="1">
+                    <td><?=$p['id']?></td>
+                    <td><?=$p['title']?></td>
+                    <td><?=$p['content']?></td>
+                    <td><?=date('Y-m-d',$p['time'])?></td>
+                    <td>
+                        <a href="{:url('admin/notice/edit')}?id=<?=$p['id']?>">修改</a>
+                        <a href="{:url('admin/notice/del')}?id=<?=$p['id']?>">删除</a>
+                    </td>
+                </tr>
+                <?php endforeach;?>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="page_nav fl" id="page">
+            {$_page}
+        </div>
+        <div class="dd" id="nestable2">
+            <ol class="dd-list">
+                {:action('Menu/tree', array($tree))}
+            </ol>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<link href="__PUBLIC__/static/nestable/jquery.nestable.css" rel="stylesheet">
+<script src="__PUBLIC__/static/nestable/jquery.nestable.js"></script>
+<script>
+    highlight_subnav('{:url("index")}');
+    $(document).ready(function () {
+        $("#nestable2").nestable({
+            group: 1,
+            callback: function (l, e) {
+                var id = $(e).attr('data-id'),
+                    pid = $(e).parent().parent('li').attr('data-id'),
+                    sort = $(e).prev().attr('data-id');
+                if (sort == "" || sort == undefined || sort == null) {
+                    sort = 0;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: "{:url('index')}",
+                    data: {"id": id, "pid": pid, "sort": sort},
+                    success: function (data) {
+                        if (data.code) {
+                            layer.msg(data.msg, {'icon': 6});
+                        }
+                    }
+                });
+            }
+        });
+        $("#nestable-menu").on("click", function (e) {
+            var action = $(this).attr("data-action");
+            if (action === "expand-all") {
+                $(".dd").nestable("expandAll");
+                $(this).attr("data-action", "collapse-all");
+                $(this).html("收起所有");
+            }
+            if (action === "collapse-all") {
+                $(".dd").nestable("collapseAll")
+                $(this).attr("data-action", "expand-all");
+                $(this).html("展开所有");
+            }
+        });
+    });
+
+    //分页
+    $(window).scroll(function(event){
+        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+            //滑到最下面的时候,获取其他数据
+            var page=$("#content").attr('page');
+            page++;
+            //console.log(111);
+            $.getJSON('pager',{page:page},function (data) {
+                if (data){
+                    var json = $.parseJSON(data);
+
+                    //循环拼出Div
+                    $(json).each(function (i,v) {
+                        var html='';
+                        console.log(v.create_time);
+                        html=" <div class='row noticeList'><a href='/admin/notice/detail/id/"+v.id+".html'><div class='col-xs-2'><img class='noticeImg' src='http://p615vqxbt.bkt.clouddn.com/"+v.img+"' /></div><div class='col-xs-10'><p>"+v.title+"</p><p>"+v.detail+"</p><p>浏览:"+v.view_times+"<span class='pull-right'>"+v.create_time+"</span></p></div></a></div>";
+                        $('#content').append(html);
+                    });
+                    $("#content").attr('page',page);
+                }
+
+            })
+        }
+    });
+
+</script>
+{/block}

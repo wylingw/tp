@@ -1,0 +1,55 @@
+/*web background*/
+.container{
+    display:table;
+    height:100%;
+}
+
+.row{
+    display: table-cell;
+    vertical-align: middle;
+}
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    text-align:left;
+    margin-right:-4px;
+}
+.login-logo {
+    display: inline-block;
+    margin-right: 12px;
+    width: 30px;
+    height: 44px;
+    vertical-align: top;
+    background: url(../images/login_logo.png) no-repeat 0 0;
+}
+.well{
+    box-shadow: 0 -5px 50px #5CB85C;
+    background-color: unset;
+    border: 0px;
+}
+.well h3 {
+    font-size: 26px;
+    font-weight: normal;
+    margin: 0 0 20px;
+    padding: 0;
+    line-height: 44px;
+    text-align: center;
+    color: #8D9CAA;
+    *line-height: 50px;
+}
+#particles-js {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+}
+#particles-js canvas{
+    display: block;
+    background: rgba(4, 33, 4, 0.91) none repeat scroll 0% 0%;
+}

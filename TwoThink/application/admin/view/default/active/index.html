@@ -1,0 +1,98 @@
+{extend name="public/base" /}
+{block name="content-header"}
+<h5><i class="fa fa-fw fa-connectdevelop"></i>  导航管理(系统菜单请勿随意拖动)</h5>
+{/block}
+{block name="body"}
+<div class="row">
+    <div class="col-xs-12">
+        <div>
+            <button type="button" class="btn btn-info ajax-get iframe" url="{:url('add')}">新增</button>
+            <button id="nestable-menu" type="button" data-action="collapse-all" class="btn bbg-teal">收起所有</button>
+        </div>
+        <!-- 数据列表 -->
+        <div class="margin-top-10">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th class="">ID</th>
+                    <th class="">标题</th>
+                    <th class="">内容</th>
+                    <th class="">开始时间</th>
+                    <th class="">结束时间</th>
+                    <th class="">发布状态</th>
+                    <th class="">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach($lists as $p):?>
+                <tr>
+                    <td><?=$p['id']?></td>
+                    <td><?=$p['title']?></td>
+                    <td><?=mb_substr($p['content'],0,20)?>......</td>
+                    <td><?=date('Y-m-d H:i:s',$p['start_time'])?></td>
+                    <td><?=date('Y-m-d H:i:s',$p['end_time'])?></td>
+                    <td><?=$p['status']==1?'发布':'禁用'?></td>
+                    <td>
+                        <a href="{:url('admin/active/edit')}?id=<?=$p['id']?>">修改</a>
+                        <a href="{:url('admin/active/del')}?id=<?=$p['id']?>">删除</a>
+                    </td>
+                </tr>
+                <?php endforeach;?>
+
+                </tbody>
+            </table>
+
+
+        </div>
+        <div class="dd" id="nestable2">
+            <ol class="dd-list">
+                {:action('Menu/tree', array($tree))}
+            </ol>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<link href="__PUBLIC__/static/nestable/jquery.nestable.css" rel="stylesheet">
+<script src="__PUBLIC__/static/nestable/jquery.nestable.js"></script>
+<script>
+    highlight_subnav('{:url("index")}');
+    $(document).ready(function() {
+        $("#nestable2").nestable({
+            group: 1,
+            callback: function(l,e){
+                var id = $(e).attr('data-id'),
+                    pid = $(e).parent().parent('li').attr('data-id'),
+                    sort = $(e).prev().attr('data-id');
+                if(sort == "" || sort == undefined || sort == null){
+                    sort = 0;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: "{:url('index')}",
+                    data:{"id":id,"pid":pid,"sort":sort},
+                    success: function (data) {
+                        if(data.code){
+                            layer.msg(data.msg,{'icon':6});
+                        }
+                    }
+                });
+            }
+        });
+        $("#nestable-menu").on("click",function(e) {
+                var action = $(this).attr("data-action");
+                if (action === "expand-all") {
+                    $(".dd").nestable("expandAll");
+                    $(this).attr("data-action","collapse-all");
+                    $(this).html("收起所有");
+                }
+                if (action === "collapse-all") {
+                    $(".dd").nestable("collapseAll")
+                    $(this).attr("data-action","expand-all");
+                    $(this).html("展开所有");
+                }
+        });
+    });
+</script>
+{/block}

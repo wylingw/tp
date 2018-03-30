@@ -1,0 +1,123 @@
+<div class="btn-toolbar seach_all" role="toolbar" aria-label="Toolbar with button groups">
+
+    {volist name="data.search_list" id="vmain"}
+    <div class="layui-form-item btn-group">
+        <div class="layui-input-inline">
+            <select name="{$name}[name][]" lay-filter="{$name}_name">
+                <option value="">请选择字段</option>
+                {volist name="fields" id="vo"};
+                <option value="{$vo.name}" title="{$vo.title}" {eq name="$vmain.name" value="$vo.name"} selected="selected" {/eq}>({$vo.name}){$vo.title}</option>
+                {/volist}
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <input name="{$name}[title][]" class="layui-input name_title" type="text" value="{$vmain.title}" placeholder="标题">
+        </div>
+        <div class="layui-input-inline">
+            <select name="{$name}[exp][]">
+                <option value="">默认不参与搜索</option>
+                <option value="eq" {eq name="$vmain.exp" value="eq"}selected="selected"{/eq}>等于</option>
+                <option value="neq" {eq name="$vmain.exp" value="net"}selected="selected"{/eq}>不等</option>
+                <option value="lt" {eq name="$vmain.exp" value="lt"}selected="selected"{/eq}>小于</option>
+                <option value="elt" {eq name="$vmain.exp" value="elt"}selected="selected"{/eq}>小于等于</option>
+                <option value="gt" {eq name="$vmain.exp" value="gt"}selected="selected"{/eq}>大于</option>
+                <option value="egt" {eq name="$vmain.exp" value="egt"}selected="selected"{/eq}>大于等于</option>
+                <option value="like" {eq name="$vmain.exp" value="like"}selected="selected"{/eq}>包含</option>
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <input name="{$name}[value][]" class="layui-input" type="text"  value="{$vmain.value}" placeholder="默认值">
+        </div>
+        <div class="layui-input-inline">
+            <select name="{$name}[type][]">
+                <option value="">参数类型</option>
+                <option value="text" {eq name="$vmain.type" value="text"}selected="selected"{/eq}>text</option>
+                <option value="select" {eq name="$vmain.type" value="select"}selected="selected"{/eq}>select</option>
+                <option value="datetime" {eq name="$vmain.type" value="datetime"}selected="selected"{/eq}>时间</option>
+                <option value="date" {eq name="$vmain.type" value="date"}selected="selected"{/eq}>日期</option>
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <textarea name="{$name}[extra][]" placeholder="请输入参数" class="layui-input">{$vmain.extra}</textarea>
+        </div>
+        <div class="layui-input-inline">
+            <button type="button" class="layui-btn seach_all_delte">删除</button>
+        </div>
+    </div>
+    {/volist}
+</div>
+<div class="layui-input-inline">
+    <button id="seach_all" type="button" class="layui-btn seach_all_delte">添加搜索配置</button>
+</div>
+<div class="{$name}_html" style="display: none;">
+    <div class="layui-form-item btn-group">
+        <div class="layui-input-inline">
+            <select name="{$name}[name][]" lay-filter="{$name}_name">
+                <option value="">请选择字段</option>
+                {volist name="fields" id="vo"};
+                <option value="{$vo.name}" title="{$vo.title}">({$vo.name}){$vo.title}</option>
+                {/volist}
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <input name="{$name}[title][]" class="layui-input name_title" type="text" placeholder="标题">
+        </div>
+        <div class="layui-input-inline">
+            <select name="{$name}[exp][]">
+                <option value="">默认不参与搜索</option>
+                <option value="eq" selected="selected">等于</option>
+                <option value="neq">不等</option>
+                <option value="lt">小于</option>
+                <option value="elt">小于等于</option>
+                <option value="gt">大于</option>
+                <option value="egt">大于等于</option>
+                <option value="like">包含</option>
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <input name="{$name}[value][]" class="layui-input" type="text" placeholder="默认值">
+        </div>
+        <div class="layui-input-inline">
+            <select name="{$name}[type][]">
+                <option value="">参数类型</option>
+                <option value="text" selected="selected">text</option>
+                <option value="select">select</option>
+                <option value="datetime">时间</option>
+                <option value="date">日期</option>
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <textarea name="{$name}[extra][]" placeholder="请输入参数" class="layui-input"></textarea>
+        </div>
+        <div class="layui-input-inline">
+            <button type="button" class="layui-btn seach_all_delte">删除</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        layui.use(['form'], function(){
+            var form = layui.form;
+            form.on('select({$name}_name)', function(data){
+                var _this = data.elem;
+                $(_this).find('option').each(function () {
+                    if($(this).val() == data.value){
+                        var this_html = $(this).parents('.btn-group');
+                        $(this_html).find('.name_title').val($(this).attr('title'))
+                    }
+                });
+
+            });
+            //添加搜索条件
+            $("#seach_all").click(function () {
+                var html = $(".{$name}_html").html();
+                $(".seach_all").append(html);
+                form.render('select');
+            });
+            //删除搜索条件
+            $(document).on("click",".seach_all_delte",function(){
+                $(this).parents('.btn-group').remove();
+            })
+        });
+    });
+</script>

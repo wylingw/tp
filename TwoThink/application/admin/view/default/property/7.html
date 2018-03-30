@@ -1,0 +1,45 @@
+{extend name="public/base" /}
+{block name="body"}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="tab-wrap">
+            <div class="btn ajax-get iframe btn-info" url="{:url('add')}"><i class="fa fa-fw fa-plus"></i>新增</div>
+            <div id="nestable-menu" data-action="collapse-all" class="btn bg-teal">收起所有</div>
+        </div>
+        <div class="col-md-6 col-sm-12 col-xs-12" >
+            <div class="dd" id="nestable2">
+                <ol class="dd-list">
+                    {:action('category/tree', array($tree))}
+                </ol>
+            </div>
+        </div>
+
+            <div class="main-title">
+                <div class="page_nav fl">
+                    {$_page}
+                </div>
+                <!--<div id="add-to-group" class="tools fr">-->
+                    <!--<form class="add-user form-inline" action="{:url('addToGroup')}" method="post" enctype="application/x-www-form-urlencoded" >-->
+                        <!--<div class="form-group">-->
+                            <!--<input class="text form-control col-xs-3" type="text" name="uid" placeholder="请输入uid,多个用英文逗号分隔">-->
+                            <!--<input type="hidden" name="group_id" value="{:input('group_id')}">-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;<button type="submit" class="btn  ajax-post btn-success" target-form="add-user">新 增</button>&ndash;&gt;-->
+                    <!--</form>-->
+                <!--</div>-->
+            </div>
+
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script type="text/javascript" charset="utf-8">
+    $('select[name=group]').change(function(){
+        location.href = this.value;
+    });
+    //导航高亮
+    highlight_subnav('{:url('AuthManager/index')}');
+</script>
+{/block}

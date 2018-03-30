@@ -1,0 +1,63 @@
+{extend name="public/base" /}
+{block name="content-header"}
+<h5><i class="fa fa-fw fa-connectdevelop"></i> 导航管理(系统菜单请勿随意拖动)</h5>
+{/block}
+{block name="body"}
+<div class="row">
+    <div class="col-xs-12">
+        <div>
+            <button type="button" class="btn btn-info ajax-get iframe" url="{:url('add')}">新增</button>
+            <button id="nestable-menu" type="button" data-action="collapse-all" class="btn bbg-teal">收起所有</button>
+        </div>
+        <!-- 数据列表 -->
+        <div class="margin-top-10">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th class="">ID</th>
+                    <th class="">报修人</th>
+                    <th class="">电话</th>
+                    <th class="">地址</th>
+                    <th class="">报修时间</th>
+                    <th class="">状态</th>
+                    <th class="">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach($propertys as $p):?>
+                <tr>
+                    <td><?=$p['id']?></td>
+                    <td><?=$p['name']?></td>
+                    <td><?=$p['tel']?></td>
+                    <td><?=$p['address']?></td>
+                    <td><?=date('Y-m-d H:i:s',$p['create_time'])?></td>
+                    <td><?=$p['status']==1?'待处理':'已处理'?></td>
+                    <td>
+                        <a href="{:url('admin/property/edit')}?id=<?=$p['id']?>">修改</a>
+                        <a href="{:url('admin/property/del')}?id=<?=$p['id']?>">删除</a>
+                    </td>
+                </tr>
+                <?php endforeach;?>
+                </tbody>
+            </table>
+        </div>
+        <div class="main-title">
+            <div class="page_nav fl" id="page">
+                {$_page}
+            </div>
+            <div class="dd" id="nestable2">
+                <ol class="dd-list">
+                    {:action('Menu/tree', array($tree))}
+                </ol>
+            </div>
+        </div>
+    </div>
+    {/block}
+
+    {block name="script"}
+    <script src="__PUBLIC__/static/js/jquery.js"></script>
+    <link href="__PUBLIC__/static/nestable/jquery.nestable.css" rel="stylesheet">
+    <script src="__PUBLIC__/static/nestable/jquery.nestable.js"></script>
+
+
+{/block}

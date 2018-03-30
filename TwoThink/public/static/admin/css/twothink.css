@@ -1,0 +1,305 @@
+/*导航 */
+.tnav_button_logo, .navbar-toggle-right{
+    font-size: 14px !important;
+    padding:0px !important;
+    margin: 0px !important;
+}
+.navbar-toggle-right{
+    float: right !important;
+}
+.main-header .collapse .in {
+    display: block !important;
+}
+#navbar{
+    padding-left: 0px !important;
+}
+.logo{
+    margin-left: 0px !important;
+}
+.logo .logo-mini{
+    /*float: left;*/
+    /*margin-left: 16px;*/
+    /*margin-top:-15px;*/
+    /*width: 184px;*/
+    /*height: 49px;*/
+    /*background: url(../images/bg_icon.png) no-repeat 0 -45px;*/
+}
+.logo .logo-lg{
+    /*height: 49px;*/
+    /*background: url(../images/bg_icon.png) no-repeat center -45px;*/
+}
+/*content*/
+.content-header{
+    margin-bottom: 5px;
+}
+.content-wrapper {
+    background-color: #f1f4f5;
+}
+.content {
+    padding: 15px;
+    background: #FFF;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+/*btn*/
+.two-btn .btn{
+    margin-top: 5px;
+}
+/*form*/
+.form-horizontal .check-tips {
+    color: #999;
+    font-size: 12px;
+    font-family: "Microsoft Yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.form-horizontal label{
+    font-weight:unset;
+}
+.form-horizontal .must{
+    color: #dd4b39;
+    padding: 3px;
+}
+/*model*/
+.edit_sort {
+    display: inline-block;
+    border: 1px solid #cdcdcd;
+    color: #404040;
+    line-height: 35px;
+    width: 20%;
+    height: 376px;
+}
+.edit_sort span {
+    background: #EEEEEE;
+    width: 100%;
+    display: inline-block;
+    font-weight: bold;
+    text-indent: 10px;
+    border-bottom: 1px solid #cdcdcd;
+    margin-bottom: 5px;
+}
+.edit_sort ul {
+    padding: 0 5px;
+    overflow-y: scroll;
+    height: 330px;
+}
+.dragsort li {
+    margin-bottom: 5px;
+    padding: 0 6px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #eee;
+    background-color: #fff;
+    overflow: hidden;
+}
+.dragsort li em {
+    font-style: normal;
+}
+/* config sort */
+.sort_option {
+    float: left;
+    margin-right: 16px;
+}
+.sort_option select {
+    height: 270px;
+    width: 220px;
+}
+.sort_btn button {
+    display: block;
+    margin-bottom: 15px;
+}
+.sort_bottom {
+    margin-top: 105px;
+}
+/*datatables*/
+table.dataTable thead th, table.dataTable thead td, table.dataTable.no-footer {
+    border-bottom: 1px solid #f4f4f4 !important;
+}
+/*layer*/
+.layer-iframe-bg-olive .layui-layer-title {
+    /*background-color: #222d32; !important;*/
+    /*color: #FFF;*/
+}
+/*common*/
+.margin-top-5{
+    margin-top: 5px !important;
+}
+.margin-top-10{
+    margin-top: 10px !important;
+}
+.margin-top-15{
+    margin-top: 15px !important;
+}
+.margin-bottom-5{
+    margin-bottom: 5px !important;
+}
+.margin-bottom-10{
+    margin-bottom: 10px !important;
+}
+.margin-bottom-15{
+    margin-bottom: 15px !important;
+}
+.margin-bottom-60{
+    margin-bottom: 60px !important;
+}
+
+
+/*****auth_manager/access*****/
+.checkmod {
+    margin-bottom: 20px;
+    border: 1px solid #ebebeb;
+    border-top-color: rgb(235, 235, 235);
+    border-right-color: rgb(235, 235, 235);
+    border-bottom-color: rgb(235, 235, 235);
+    border-left-color: rgb(235, 235, 235);
+    overflow: hidden;
+}
+.checkmod dt {
+    padding-left: 30px;
+    height: 30px;
+    font-weight: bold;
+    border-bottom: 1px solid #ebebeb;
+    border-bottom-color: rgb(235, 235, 235);
+    background-color: #ECECEC;
+}
+.checkmod input, .radio input {
+    margin-right: 5px;
+    *margin-right: 1px;
+    vertical-align: -1px;
+}
+.checkmod dd {
+    padding-left: 30px;
+}
+.checkmod dd .divsion {
+    float: left;
+    margin-right: 20px;
+}
+.checkmod .child_row{
+    overflow: hidden;
+}
+.checkmod .child_row .checkbox{
+    float: left;
+    margin-left: 30px;
+}
+/*****auth_manager/category*****/
+/* = 分类管理树形菜单（目前只支持3级）
+------------------------------------------ */
+.category {
+    margin: 10px 0;
+    border-bottom-width: 0;
+    background-color: #fff;
+}
+.category .hd {
+    overflow: hidden;
+    font-weight: bold;
+    border-bottom: 1px solid #d4d4d4;
+    color:#fff;
+    background-color: #353535;
+}
+.category .cate-item dt {
+    border-bottom: 1px solid #E7E7E7;
+}
+.category dl,
+.category dd,
+.category input {
+    margin: 0;
+}
+.category .check,
+.category .fold,
+.category .order,
+.category .name {
+    float: left;
+    height: 35px;
+    line-height: 35px;
+}
+.category .opt {
+    float: right;
+    width: 120px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+}
+.opt-btn {
+    float: right;
+    margin: 5px 10px 0 0;
+}
+.category .check {
+    width: 40px;
+    text-align: center;
+}
+.category .fold {
+    width: 50px;
+    text-align: center;
+}
+.category .fold i {
+    display: inline-block;
+    vertical-align: middle;
+    width: 17px;
+    height: 17px;
+    background-repeat: no-repeat;
+}
+.category .fold .icon-fold,
+.category .fold .icon-unfold {
+    cursor: pointer;
+    background: url(../images/bg_icon.png) no-repeat;
+}
+.category .fold .icon-fold {
+    background-position: -100px -25px;
+}
+.category .fold .icon-unfold {
+    background-position: -125px -25px;
+}
+.category .order,
+.category .order input {
+    text-align: center;
+}
+.category .order {
+    width: 90px;
+}
+.category .order input {
+    margin-bottom: 2px;
+    width: 40px;
+}
+.category .name input {
+    margin-bottom: 2px;
+}
+.category .add-sub-cate {
+    margin-left: 10px;
+}
+.category .add-sub-cate:hover {
+    text-decoration: none;
+    border-bottom: 0 none;
+}
+.category .btn-mod {
+    margin-left: 15px;
+}
+.category .root {
+    font-weight: bold;
+}
+.category .tab-sign {
+    display: inline-block;
+    margin-left: 15px;
+    height: 21px;
+    vertical-align: middle;
+    background-image: url(../images/tab_sign.png);
+    background-repeat: no-repeat;
+}
+.category .name .msg {
+    vertical-align: top;
+    font-weight: normal;
+}
+.category .name .error {
+    color: #B94A48;
+}
+.category .name .success {
+    color: #468847;
+}
+.category > dl > dd > dl:last-child > dt .tab-sign {
+
+    background-position: -55px 0;
+
+}
+.category > dl > dd > dl > dt .tab-sign {
+
+    width: 55px;
+    background-position: 0 0;
+
+}

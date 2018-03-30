@@ -1,0 +1,118 @@
+<!-- 管理员用户组新增和编辑页面 -->
+{extend name="public/base" /}
+{block name="body"}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="tab-wrap">
+            <ul class="tab-nav nav nav-tabs">
+                <li class="active"><a href="javascript:;">访问授权</a></li>
+                <li><a href="{:url('AuthManager/category',array('group_name'=>input('group_name') ,'group_id'=> input('group_id')))}">分类授权</a></li>
+                <li><a href="{:url('AuthManager/user',array('group_name'=>input('group_name') ,'group_id'=> input('group_id')))}">成员授权</a></li>
+                <li class="pull-right">
+                    <select class="form-control" name="group">
+                        {volist name="auth_group" id="vo"}
+                        <option value="{:url('AuthManager/access',array('group_id'=>$vo['id'],'group_name'=>$vo['title']))}" {eq  name="vo['checked']" value="true"}selected{/eq}>{$vo.title}</option>
+                        {/volist}
+                    </select>
+                </li>
+            </ul>
+            <div class="two-tab-content margin-top-10">
+                <!-- 访问授权 -->
+                <div class="tab-pane in">
+                    <!--<form action="{:url('AuthManager/writeGroup')}" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal auth-form">-->
+
+                        <ul id="treeDemo" class="ztree"></ul>
+
+                        <input type="hidden" name="id" value="{:input('group_id')}" />
+                        <button type="submit" class="btn btn-danger ajax-posts" target-form="auth-form">确 定</button>
+                        <button class="btn btn-success" onclick="javascript:history.back(-1);return false;">返 回</button>
+                    <!--</form>-->
+                </div>
+
+                <!-- 成员授权 -->
+                <div class="tab-pane"></div>
+
+                <!-- 分类 -->
+                <div class="tab-pane"></div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{/block}
+{block name="script"}
+<link rel="stylesheet" href="__STATIC__/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="__STATIC__/zTree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="__STATIC__/zTree/js/jquery.ztree.excheck.js"></script>
+<style>
+    ul.ztree li span.button.switch{margin-right:5px}
+    ul.ztree ul ul li{display:inline;white-space:normal}
+    /*ul.ztree>li>ul>li{padding:5px}*/
+    /*ul.ztree>li{background: #dae6f0}*/
+    /*ul.ztree>li:nth-child(even)>ul>li:nth-child(even){background: #eef5fa}*/
+    /*ul.ztree>li:nth-child(even)>ul>li:nth-child(odd){background: #f6fbff}*/
+    /*ul.ztree>li:nth-child(odd)>ul>li:nth-child(even){background: #eef5fa}*/
+    /*ul.ztree>li:nth-child(odd)>ul>li:nth-child(odd){background: #f6fbff}*/
+    /*ul.ztree>li>ul{margin-top:12px}*/
+    /*ul.ztree>li{padding:15px;padding-right:25px}*/
+    ul.ztree li{white-space:normal!important}
+    ul.ztree>li>a>span{font-size:15px;font-weight:700}
+</style>
+<script type="text/javascript" >
+
+    var setting = {
+        view: {
+            showIcon: false
+        },
+        check: {
+            enable: true
+        },
+        data: {
+            key: {
+                title:"tip",
+                name:"title",
+                url:"delurl"
+            },
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "pid",
+                rootPId: 0
+            }
+        }
+    };
+
+    var zNodes ={:json_encode($node_list)};
+
+    $(document).ready(function(){
+        var treeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        treeObj.expandAll(true);//默认展开
+
+        $(".ajax-posts").click(function(){
+            var nodes = treeObj.getCheckedNodes(true),
+                id = $("input[name='id']").val();
+                data=[];
+            for (var i = 0; i < nodes.length; i++) {
+                data[i] = nodes[i].auth_rule_id;
+            }
+            $.post("{:url('AuthManager/writeGroup')}",{'rules':data,'id':id}).done(function(data){
+                if(data.code == 1){
+                    layer_success(data.msg);
+                    setTimeout(function(){
+                        location.reload();
+                    },1500);
+                }else{
+                    layer_error(data.msg);
+                }
+            });
+        });
+        $('select[name=group]').change(function(){
+            location.href = this.value;
+        });
+        //导航高亮
+        highlight_subnav('{:url('AuthManager/index')}');
+    });
+</script>
+{/block}

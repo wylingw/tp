@@ -1,0 +1,13 @@
+<ul class="side-sub-menu sidebar-menu" data-widget="tree">
+
+
+    <!-- 子导航 -->
+    {notempty name="__MENU__.operater"}
+        {:action('Menu/sidetree', array($__MENU__['operater'],'menu/sidenodes'))}
+    {/notempty}
+    <!--/ 子导航 -->
+    <li class="header">LABELS</li>
+    <li><a href="http://twothink.cn" target="_blank"><i class="fa fa-home text-red"></i> <span>官方网站</span></a></li>
+    <li><a href="https://www.kancloud.cn/ming118116/twothink" target="_blank"><i class="fa fa-book text-yellow"></i> <span>官方文档</span></a></li>
+    <li><a href="http://shang.qq.com/wpa/qunwpa?idkey=e44ea31a37e47815528c511f139e43c4e80de8edf8aa9c016134450dbbbd5a67" target="_blank"><i class="fa fa-qq text-aqua"></i> <span>QQ交流</span></a></li>
+</ul>
